@@ -34,13 +34,16 @@ The results obtained on the test set are as follows :
 ## Acknowledgements 
 Paper written under the able guidance of : 
   **Dr. Vineeth N Balasubramanian**,  IIT Hyderabad, India.
+
   **Dr. Wei Guo**, University of Tokyo, Tokyo.
 
 ## Code Contributors
 Manasa Kumar [[github]](https://www.github.com/manasaKay/)
+
 Sai Vikas [[github]](https://www.github.com/saivikas3/)
 
 ## References
 [1] Guo W, Fukatsu T, Ninomiya S. *Automated characterization of flowering dynamics in rice using field-acquired time-series RGB images.* Plant Methods. 2015;11:7. [doi:10.1186/s13007-015-0047-9](https://doi.org/10.1186/s13007-015-0047-9)
+
 [2] Karen Simonyan, Andrew Zisserman. *Very Deep Convolutional Networks for Large-Scale Image Recognition.* [arXiv:1409.1556](https://arxiv.org/abs/1409.1556)
 
