@@ -1,50 +1,46 @@
-# flowering-panicle-detection
 
-notes : 
+## Introduction
 
-- include parts of abstract to give a context
+This is an implementation of a yet to be submitted paper titled 'To Go Deep or Not To: Detection of Flowering Panicles in Paddy Rice'. To plan the perfect time for harvest of rice crops, we detect and quantify the flowering of paddy rice. The dataset of rice crop images used in this work is taken from [1].
 
-Introduction: 
+## Methodology 
 
-This is an implementation of a yet to be submitted paper titled 'To Go Deep or Not To: Detection of Flowering Panicles in Paddy Rice'. To plan the perfect time for harvest of rice crops, we detect and quantify the flowering of paddy rice. The dataset of rice crop images used in this work is taken from [1]. 
-
-- brief description of the algorithms used
-
-Methodology : 
-
-The basic outline of the method is as follows. We use an SVM classifier with a sliding window to detect flowering panicles in the image. To generate the features to be given as input to the SVM classifier, we use two methods of feature extraction and compare their performances. 
-
+The basic outline of the method is as follows. We use an SVM classifier with a sliding window to detect flowering panicles in the image. To generate the features to be given as input to the SVM classifier, we use two methods of feature extraction and compare their performances.
  - Feature extraction using SIFT Descriptors
- - Feature extraction using a Deep neural network (VGG-16 [2])
+ - Feature extraction using a deep neural network (VGG-16 [2])
 
-Training is done using patches sampled from 21 images of Kinmaze dataset. Testing is done on the full 5184x3456 images from Kinmaze dataset. [1]. 
+Training is done using patches sampled from 21 images of Kinmaze dataset. Testing is done on the full 5184x3456 images from Kinmaze dataset. [1].
 
-- How to Run
-- Results
+## How to Run
 
-The ROC curves obtained for the SVM classifier after performing cross validation on training dataset are as follows : 
+[text to be added]
 
-[image 1]
+## Results
 
-[image 2]
-
-The results obtained on the test set are as follows : 
-
-[Table 1]
+The ROC curves obtained for the SVM classifier after performing cross validation on training dataset are as follows :
 
 
-Acknowledgements: Paper written under the able guidance of 
+![SIFT ROC Curve](https://i.imgur.com/Qf4y0Xy.png)
+![VGG ROC Curve](https://i.imgur.com/QWnS4EK.png)
 
- - Dr Vineeth N Balasubramanian
- - Dr Wei Guo 
+The results obtained on the test set are as follows :
 
-- Code Contributors
+| Approach | Pearson Correlation Coefficient          | 
+| ------------- |:-------------:| 
+| VGG     | **0.7495** | 
+| SIFT      | 0.5435       | 
 
-1. Manasa Kumar [github]
-2. Sai Vikas [github]
 
+## Acknowledgements 
+Paper written under the able guidance of : 
+  **Dr. Vineeth N Balasubramanian**,  IIT Hyderabad, India.
+  **Dr. Wei Guo**, University of Tokyo, Tokyo.
 
-References : 
+## Code Contributors
+Manasa Kumar [[github]](https://www.github.com/manasaKay/)
+Sai Vikas [[github]](https://www.github.com/saivikas3/)
 
-[1] Guo et al.'s paper
-[2] VGG Paper
+## References
+[1] Guo W, Fukatsu T, Ninomiya S. *Automated characterization of flowering dynamics in rice using field-acquired time-series RGB images.* Plant Methods. 2015;11:7. [doi:10.1186/s13007-015-0047-9](https://doi.org/10.1186/s13007-015-0047-9)
+[2] Karen Simonyan, Andrew Zisserman. *Very Deep Convolutional Networks for Large-Scale Image Recognition.* [arXiv:1409.1556](https://arxiv.org/abs/1409.1556)
+
