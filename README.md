@@ -32,7 +32,8 @@ The results obtained on the test set are as follows :
 
 
 ## Acknowledgements 
-Paper written under the able guidance of : 
+Paper written under the able guidance of :
+ 
   **Dr. Vineeth N Balasubramanian**,  IIT Hyderabad, India.
 
   **Dr. Wei Guo**, University of Tokyo, Tokyo.
