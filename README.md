@@ -25,9 +25,12 @@ The ROC curves obtained for the SVM classifier after performing cross validation
 <img src="https://i.imgur.com/Qf4y0Xy.png" width="400" />
 </td>
 <td>
-<img src="https://i.imgur.com/QWnS4EK.png" width="400" />
+<img src="https://i.imgur.com/QWnS4EK.png" width="450" />
 </td>
 </tr>
+<tr>
+<td> SIFT with D = 50 pixels </td>
+<td> VGG based features </td>
 <table>
 The results obtained on the test set are as follows :
 
