@@ -4,6 +4,9 @@
 from imutils import paths
 
 import keras
+from keras.applications.vgg16 import VGG16
+from keras.models import Model
+from keras.layers import Dense
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.convolutional import Convolution2D, MaxPooling2D
@@ -16,18 +19,46 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.utils import np_utils
 from keras.callbacks import ModelCheckpoint
 from keras.models import model_from_json
-from keras import regularizers
 import os,cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.calibration import CalibratedClassifierCV
 
 import numpy as np
-from scipy import interp
+import cv2
+from sklearn.datasets import fetch_olivetti_faces
+from sklearn.kernel_approximation import AdditiveChi2Sampler
+from sklearn.metrics import classification_report
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+
+from feature_aggregation import BagOfWords
+import random
+from sklearn.calibration import CalibratedClassifierCV
+
+import os,cv2
+import numpy as np
 import matplotlib.pyplot as plt
+
+from sklearn.utils import shuffle
+from sklearn.cross_validation import train_test_split
+from sklearn import preprocessing
+from sklearn.utils import shuffle
+from sklearn.cross_validation import train_test_split
+from sklearn import preprocessing
+from keras import regularizers
+from sklearn.model_selection import StratifiedKFold
+
+
+import sys
+
+import pandas as pd
+import datetime
+
+
+from scipy import interp
 from itertools import cycle
 
-from sklearn import svm, datasets
 from sklearn.metrics import roc_curve, auc
 from sklearn.model_selection import StratifiedKFold
 from sklearn.utils import shuffle
@@ -43,8 +74,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from keras.models import Model
-import numpy as np
-import cv2
 from sklearn.datasets import fetch_olivetti_faces
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.metrics import classification_report
@@ -54,9 +83,6 @@ from sklearn.svm import LinearSVC
 from feature_aggregation import BagOfWords
 import random
 from sklearn.svm import SVC
-import os,cv2
-import numpy as np
-import matplotlib.pyplot as plt
 
 from sklearn.utils import shuffle
 from sklearn.cross_validation import train_test_split
@@ -66,18 +92,13 @@ from sklearn.cross_validation import train_test_split
 from sklearn import preprocessing
 from keras import regularizers
 from sklearn.model_selection import StratifiedKFold
-
 from sklearn import datasets, svm, pipeline
 
-
-
 import itertools
-import numpy as np
-import matplotlib.pyplot as plt
-
 from sklearn import svm, datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from keras.optimizers import SGD
 
 
 
@@ -87,14 +108,12 @@ from sklearn.metrics import confusion_matrix
 seed=7
 np.random.seed(seed)
 
-path_train_flower='/media/sdg/manasa/extended_kfold/fifth/train/flower'
-path_train_leaf='/media/sdg/manasa/extended_kfold/fifth/train/leaf'
+#Set the paths to the training patches
+path_train_flower='../../../extended_kfold/fifth/train/flower'
+path_train_leaf='../../../extended_kfold/fifth/train/leaf'
 
-path_test_flower='/media/sdg/manasa/extended_kfold/fifth/validation/flower'
-path_test_leaf='/media/sdg/manasa/extended_kfold/fifth/validation/leaf'
-
-
-#path_train_flower='/Users/manasakumar/Downloads/actual_resized_train'
+path_test_flower='../../../extended_kfold/fifth/validation/flower'
+path_test_leaf='../../../extended_kfold/fifth/validation/leaf'
 
 img_rows=224
 img_cols=224
@@ -178,9 +197,6 @@ des_list_test=[]
 # ===================== Compiling the VGG model =========================
 
 
-from keras.applications.vgg16 import VGG16
-from keras.models import Model
-from keras.layers import Dense
 
 
 
@@ -192,14 +208,9 @@ model = Model(input=vgg16.input, output=fc2)
 model.summary()
 
 
-import pandas as pd
-
 for layer in model.layers:
     layer.trainable = False
 
-
-
-from keras.optimizers import SGD
 sgd = SGD(lr=1e-4, momentum=0.9)
 model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
@@ -240,70 +251,25 @@ for image_path, descriptor in des_list_test[1:]:
 # ======================== training the SVM ==========================
 
 
-clf3 = SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,decision_function_shape=None, probability=True, degree=3, gamma='auto', kernel='poly',verbose=False)
-#clf3 = CalibratedClassifierCV(svm3)
-clf3=clf3.fit(descriptors_train,labels_train)
+clf = SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,decision_function_shape=None, probability=True, degree=3, gamma='auto', kernel='poly',verbose=False)
+#clf = CalibratedClassifierCV(svm3)
+clf=clf.fit(descriptors_train,labels_train)
 
 
 # ======================== calculating accuracy with test data ==========================
-#score3=clf3.score(descriptors_test,labels_test)
-
-
-
-
-
-
-
 
 # ======================== Sliding window code ==========================
-
-
-import numpy as np
-import cv2
-from sklearn.datasets import fetch_olivetti_faces
-from sklearn.kernel_approximation import AdditiveChi2Sampler
-from sklearn.metrics import classification_report
-from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
-
-from feature_aggregation import BagOfWords
-import random
-from sklearn.calibration import CalibratedClassifierCV
-
-import os,cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-from sklearn.utils import shuffle
-from sklearn.cross_validation import train_test_split
-from sklearn import preprocessing
-from sklearn.utils import shuffle
-from sklearn.cross_validation import train_test_split
-from sklearn import preprocessing
-from keras import regularizers
-from sklearn.model_selection import StratifiedKFold
-
-
-import sys
-
-import pandas as pd
-import datetime
-
 df = pd.DataFrame({'Name': [],'Value':[]})
+#Specify the path to the test data : (kinmaze dataset, in this case)
+path_for_test_images = sys.argv[1]
 
-
-
-
-
-#path3='/media/sdg/manasa/kinmaze29'  ##Kinmaze test images
-path3 = sys.argv[1]
-path1a='/media/sdg/manasa/boxed_images2' ##Save the boxed images here!
+path_for_output_images='boxed_images' ##Save the output images containing bounding boxes
 
 
 global k
 k=0
 
-listing3=os.listdir(path3)
+listing3=os.listdir(path_for_test_images)
 
 
 listing3 = sorted(listing3)
@@ -313,7 +279,7 @@ for file in listing3:
     global coord
     coord=[]
 
-    img=cv2.imread(path3+'/'+file)
+    img=cv2.imread(path_for_test_images+'/'+file)
 
     resized=img
 
@@ -363,7 +329,7 @@ for file in listing3:
             for pos in xrange(0, last):
 
 
-                    # grab the current index
+                # grab the current index
                 j = idxs[pos]
 
 
@@ -390,45 +356,30 @@ for file in listing3:
         return boxes[pick]
 
     def load_model(window_image):
-
-
-
         des=window_image
-
         des=des.reshape(1,224,224,3)
-
-
         layer_name = 'fc1'
         intermediate_layer_model = Model(inputs=model.input,outputs=model.get_layer(layer_name).output)
         intermediate_output = intermediate_layer_model.predict(des)
-        y_proba = clf3.predict_proba(intermediate_output) ##
-	class_lab=clf3.predict(intermediate_output)
-
+        y_proba = clf.predict_proba(intermediate_output) ##
+		class_lab=clf.predict(intermediate_output)
         return y_proba
-
-
-
-
-
-
 
 
     global count_flowers
     global clone1
     count_flowers=0
 
-
-
     def show_window():
         global image_flowers
         global image_leaves
         global clone1
-	global file
-	print ('Starting the image! ' + file + ' ' + str(datetime.datetime.now()))
+		global file
+		print ('Starting the image! ' + file + ' ' + str(datetime.datetime.now()))
 
-	clone1=resized
-	rowData = []
-	rowData.append(file)
+		clone1=resized
+		rowData = []
+		rowData.append(file)
 
         for(x,y, window) in sliding_window(resized, 120, (wind_row,wind_col)):
 
@@ -439,76 +390,39 @@ for file in listing3:
             global clone1
 
 
-	    if window is None:
-	       	continue
-            if window.shape[0] != wind_row or window.shape[1] != wind_col:
-                continue
+	    	if window is None:
+	       		continue
+            	if window.shape[0] != wind_row or window.shape[1] != wind_col:
+                	continue
 
 
             t_img = window
-
-
-
-
             img_1 = image_to_feature_vector(t_img,(224,224)) #should be (150528)
-
-
-
-
             img_data = np.array(img_1) # converted to array
-
-
             img_data = img_data.astype('float32') # converted to float
-
-
             img_data_scaled = preprocessing.scale(img_data) #preprocessed in life
-
 
             img_data=img_data_scaled
             img_data=img_data.reshape(1,224,224,3) # changed to (1,224,224,3)
-
-
-            #8. Then, pass it to the CNN and get its feature of size 4096 and be happy.
-            #9. Pass this 4096 to the svm and get your result bitchesssss
-
-
-
-
+            #8. Then, pass it to the CNN and get its feature of size 4096.
+            #9. Pass this 4096 to the svm
             prediction =load_model(img_data)
-
-
-
-
-            #cv2.imshow("sliding_window", window)
-
             global coord
 
 
            # print prediction
             if (prediction[0][1]> prediction[0][0]): #Applying threshold
-                #if(prediction[0][1]>0.998800):
                	coord.append((x,y,x+140,y+140))
-                #	count_flowers+=1
-				#
-		rowData.append(prediction[0][1])
-	
-	
-	return rowData
+				rowData.append(prediction[0][1])
 
 
-            #cv2.startWindowThread()
-            #cv2.waitKey(1)
-
-
+			return rowData
 
 
     rowAsList = show_window()
 
 	#create a pd series.
     rowAsSeries = pd.Series(rowAsList)
-    #print rowAsSeries
-
-
     coord_array=np.array(coord)
 
     pick = non_max_suppression_slow(coord_array, 0.5)
@@ -522,14 +436,11 @@ for file in listing3:
     print file
     print length
 
-
-
-
-    #df=df.append({'Name':file,'Value':length,ignore_index=True)
     df = df.append(rowAsSeries,ignore_index=True)
 
     name=file
-    cv2.imwrite(path1a+"/"+name[:-4]+"_an.jpg", clone1)
+	#Save the boxed image
+    cv2.imwrite(path_for_output_images+"/"+name[:-4]+"_boxed.jpg", clone1)
     fileName = sys.argv[2]
 
     writer = pd.ExcelWriter(fileName, engine='xlsxwriter')
@@ -541,15 +452,3 @@ for file in listing3:
     # Close the Pandas Excel writer and output the Excel file.
     writer.save()
     # Create a Pandas Excel writer using XlsxWriter as the engine.
-
-
-
-
-
-#xl = pd.ExcelFile("kinmaze_vggsvm1_29.xlsx")
-#df = xl.parse("Sheet1")
-#df = df.sort_values("Name")
-
-#writer = pd.ExcelWriter('sorted_kinmaze_vggsvm1_29.xlsx')
-#df.to_excel(writer,sheet_name='Sheet1',columns=["Name","Value"],index=False)
-#writer.save()

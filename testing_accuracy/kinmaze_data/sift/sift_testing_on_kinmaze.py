@@ -37,17 +37,12 @@ k=800
 ##Seeding for Random Numbers
 seed=7 #used below for train/test split
 np.random.seed(seed)
-
-##preparing images for TRAINING
-#img_rows=140
-#img_cols=140
-
 img_data_list=[]
 num_channel=1
 
 ##FILE PATHS
 trainPath = 'new_full_train_140' #Training patches
-testPath = 'kinmaze_original'  ##Kinmaze test images
+testPath = 'kinmaze_original'  ##Add the path to the test images here
 
 #===================================TRAINING CODE===============================================##
 
@@ -55,8 +50,7 @@ testPath = 'kinmaze_original'  ##Kinmaze test images
 listTrainImages=sorted(os.listdir(trainPath))
 print len(listTrainImages)
 
-#print listTrainImages[0:512]
-
+#sanity checks : Count the number of flower and leaf patches
 areFlowers = True
 areLeaves  = True
 
@@ -191,7 +185,7 @@ def show_window(resized):
         if prediction[0][1]>prediction[0][0]: #if P(panicle exists) > P(panicle doesn't exist)
 	       rowData.append(prediction[0][1])
             #if prediction[0][1]> threshold: # if the prediction is pretty confident
-               coord.append((x,y,x+140,y+140))
+           coord.append((x,y,x+140,y+140))
             #    count_flowers+=1 #increment the flowering panicle count
     return rowData
 
@@ -249,16 +243,6 @@ for file in listTestImages:
 
 
     #write the dataframe to a spreadsheet
-    writer = pd.ExcelWriter('kinmaze_siftsvm_newds_1.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter('kinmaze_allprobs.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name='Sheet1')
     writer.save()
-
-#sort the table by Name
-#ixl = pd.ExcelFile("kinmaze_siftsvm_new_acc.xlsx")
-#df = xl.parse("Sheet1")
-#df = df.sort_values("Name")
-##
-#writer = pd.ExcelWriter('sorted_kinmaze_siftsvm_new_acc.xlsx')
-#df.to_excel(writer,sheet_name='Sheet1',columns=["Name","Value"],index=False)
-#writer.save()
-
