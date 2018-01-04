@@ -14,7 +14,7 @@ Training is done using patches sampled from 21 images of Kinmaze dataset. Testin
 
 ## Results
 
-The ROC curves obtained for the SVM classifier after performing cross validation on training dataset are as follows :
+The ROC curves obtained for the SVM classifier after performing cross validation on patches are as follows :
 
 
 
@@ -23,7 +23,7 @@ The ROC curves obtained for the SVM classifier after performing cross validation
 | <img src="https://i.imgur.com/ibPYUpn.png" width="400" />    | <img src="https://i.imgur.com/QWnS4EK.png" width="450" /> |
 
 
-The results obtained on the test set are as follows :
+The correlation results obtained on the whole-images are as follows :
 
 | Approach | Pearson Correlation Coefficient          | 
 | ------------- |:-------------:| 
