@@ -14,28 +14,18 @@ import itertools
 
 import keras
 from keras.models import Sequential
-from keras.layers.core import Dense, Dropout, Activation, Flatten
-from keras.layers.convolutional import Convolution2D, MaxPooling2D
 from keras.optimizers import SGD,RMSprop,adam
 from keras.utils import np_utils
 from keras.constraints import maxnorm
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint
 from keras.models import model_from_json
 from keras import regularizers
 from keras.optimizers import SGD
 from keras.applications.vgg16 import VGG16
-from keras import regularizers
 from keras.models import Model
-from keras.layers import Dense
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
-from keras.models import Model
 
 from feature_aggregation import BagOfWords
-
-
-from sklearn.cross_validation import train_test_split
 from sklearn.metrics import roc_curve, auc
 from sklearn.datasets import fetch_olivetti_faces
 from sklearn.kernel_approximation import AdditiveChi2Sampler
@@ -45,7 +35,6 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import roc_auc_score
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
-from sklearn.utils import shuffle
 from sklearn import datasets, svm, pipeline
 from sklearn.kernel_approximation import (RBFSampler,Nystroem)
 from sklearn.utils import shuffle
