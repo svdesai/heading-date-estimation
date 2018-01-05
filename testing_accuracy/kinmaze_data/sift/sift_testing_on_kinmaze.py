@@ -5,24 +5,21 @@ from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 from sklearn.utils import shuffle
-from sklearn.cross_validation import train_test_split
 from sklearn import preprocessing
-from sklearn.utils import shuffle
 from sklearn.cross_validation import train_test_split
-from sklearn import preprocessing
 from keras import regularizers
 from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
 from sklearn.metrics.pairwise import chi2_kernel
 from sklearn.metrics import roc_curve, auc
 from feature_aggregation import BagOfWords
-
 from sklearn.calibration import CalibratedClassifierCV
 import time
 import os,cv2
 import numpy as np
 import random
 import pandas as pd
+
 #custom modules
 from bow_model_training import sift, dsift, image_to_feature_vector
 from bow_model_testing import sliding_window, non_max_suppression_slow
@@ -80,7 +77,6 @@ img_data_scaled = preprocessing.scale(img_data)
 img_data_scaled=img_data_scaled.reshape(img_data.shape[0],img_rows,img_cols,num_channel)
 img_data=img_data_scaled
 
-
 ##Create the labels array
 num_of_samples = img_data.shape[0] #782
 labels = np.ones((num_of_samples,),dtype='int64')
@@ -108,7 +104,6 @@ features_train = [
 # 140/5 = 28. Total keypoints : 28x28 = 784.
 # 128 bin values for each keypoint. Therefore, (784,128)
 
-
 bow_train = BagOfWords(800) # 800 is the number of codewords
 bow_train.fit(features_train) #use k means clustering to map image patches to codewords
 img_bow_train = bow_train.transform(features_train) #transform the histogram of codewords into an image
@@ -116,7 +111,6 @@ img_bow_train = bow_train.transform(features_train) #transform the histogram of 
 print 'fitting the svm model.. '
 ## train the SVM classifier with chi2 kernel
 svm = SVC(probability=True,kernel=chi2_kernel).fit(img_bow_train,Y_train)
-
 
 ## get SIFT descriptors for datapoints in test set
 features_test = [
@@ -134,7 +128,7 @@ print svm.score(img_bow_test,Y_test)
 
 ##===============================SLIDING WINDOW CODE==================================================##
 def load_model(window_image):
-
+	
     n=window_image
     #generate feature vectors
     features_test_here = [
@@ -146,86 +140,65 @@ def load_model(window_image):
 
     #predict probabilities of each class
     y_proba = svm.predict_proba(img_bow_test_here)
-
     return y_proba
-
 
 def show_window(resized):
     global image_flowers
     global image_leaves
     global clone1
     global file
+	
     #threshold = 0.5  #if svm predicts flower with a confidence lesser than threshold, count won't be incremented.
     rowData = []
     rowData.append(file)
     for(x,y, window) in sliding_window(resized, stepSize, (wind_row,wind_col)):
 
         global count_flowers
-        global image_flowers
-        global image_leaves
-        global clone1
-
         #if shape is not equal to the sliding window shape, continue
         if window.shape[0] != wind_row or window.shape[1] != wind_col:
             continue
 
         currentWindow = window
-
         currWindowFeatures = image_to_feature_vector(currentWindow,(140,140)) #should be (150528)
         img_data = np.array(currWindowFeatures) # converted to array
         img_data = img_data.astype('float32') # converted to float
         img_data_scaled = preprocessing.scale(img_data) #preprocessed in life (standardization)
-
         img_data=img_data_scaled
         img_data=img_data.reshape(1,140,140,1) # changed to (1,140,140,1)
-
         prediction=load_model(img_data)
         global coord
-
+	
         if prediction[0][1]>prediction[0][0]: #if P(panicle exists) > P(panicle doesn't exist)
 	       rowData.append(prediction[0][1])
             #if prediction[0][1]> threshold: # if the prediction is pretty confident
            coord.append((x,y,x+140,y+140))
             #    count_flowers+=1 #increment the flowering panicle count
+		
     return rowData
 
-
-
-
-
 df = pd.DataFrame({'Name': [],'Value':[]})
-
 global k
 k=0
+
 
 #Do the sliding window test for each image in the directory : testPath
 listTestImages=os.listdir(testPath)
 listTestImages = sorted(listTestImages)
 for file in listTestImages:
-
     print ('Starting the image!')
-
     global k
     global coord
     global count_flowers
     global clone1
-
     coord=[]
     img=cv2.imread(testPath+'/'+file,0)
     resized=img
-
-
-
-
     #set flower count to zero
     count_flowers=0
     rowAsList = show_window(resized) #the method which runs svm and detects flowers
     rowAsSeries = pd.Series(rowAsList)
-
     print rowAsList
-
     coord_array=np.array(coord) #the array of rectangles in which a flower exists
-
     pick = non_max_suppression_slow(coord_array, 0.5)
 
     #draw rectangles at each set of coordinates in the coord_array
@@ -233,14 +206,10 @@ for file in listTestImages:
         cv2.rectangle(resized, (x1, x2), (x3,x4), (15, 15, 255), 3)
 
     length=len(pick)
-
     print file
     print length
     print time.asctime( time.localtime(time.time()) )
-    #df=df.append({'Name':file,'Value':length},ignore_index=True)
-
     df = df.append(rowAsSeries,ignore_index=True)
-
 
     #write the dataframe to a spreadsheet
     writer = pd.ExcelWriter('kinmaze_allprobs.xlsx', engine='xlsxwriter')
