@@ -11,6 +11,23 @@ The basic outline of the method is as follows. We use an SVM classifier with a s
 
 Training is done using patches sampled from 21 images of Kinmaze dataset. Testing is done on the full 5184x3456 images from Kinmaze dataset. [1].
 
+#How to Run
+
+To obtain training accuracy : 
+
+```bash
+
+python sift_training_accuracy.py
+
+python vgg_training_accuracy.py
+
+```
+
+To obtain correlation : 
+
+```bash
+python vgg_testing_on_kinmaze.py path_to_directory_containing_test_images/ output_probs.xlsx
+```
 
 ## Results
 
