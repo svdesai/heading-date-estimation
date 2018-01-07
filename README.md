@@ -39,6 +39,9 @@ The ROC curves obtained for the SVM classifier after performing cross validation
 | ------------- |:-------------:| 
 | <img src="https://i.imgur.com/ibPYUpn.png" width="400" />    | <img src="https://i.imgur.com/QWnS4EK.png" width="450" /> |
 
+Flowering panicles detected in one of the images of the Kinmaze dataset: 
+
+<img src="https://i.imgur.com/AaI9BCf.jpg" width="800" />
 
 The correlation results obtained on the whole-images are as follows :
 
@@ -49,7 +52,7 @@ The correlation results obtained on the whole-images are as follows :
 
 The computational cost for VGG based method is as follows : 
 
-| Task | Time Takem          | 
+| Task | Time Taken          | 
 | ------------- |:-------------:| 
 | Feature extraction using VGG and training the SVM classifier     | 42 seconds | 
 | Detecting flowering panicles      | 29 seconds per image       |
