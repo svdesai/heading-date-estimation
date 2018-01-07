@@ -49,8 +49,12 @@ The correlation results obtained on the whole-images are as follows :
 
 The computational cost for VGG based method is as follows : 
 
-- Feature extraction using VGG and training the SVM classifier : 42 seconds
-- Detecting flowering panicles for one image                   : 29 seconds
+| Task | Time Takem          | 
+| ------------- |:-------------:| 
+| Feature extraction using VGG and training the SVM classifier     | 42 seconds | 
+| Detecting flowering panicles      | 29 seconds per image       |
+
+GPU Used : NVIDIA Geforce GTX 1080Ti (11 GB Memory)
 
 ## Acknowledgements 
 Paper written under the able guidance of :
