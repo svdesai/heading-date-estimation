@@ -47,6 +47,10 @@ The correlation results obtained on the whole-images are as follows :
 | VGG     | **0.7495** | 
 | SIFT      | 0.5435       | 
 
+The computational cost for VGG based method is as follows : 
+
+- Feature extraction using VGG and training the SVM classifier : 42 seconds
+- Detecting flowering panicles for one image                   : 29 seconds
 
 ## Acknowledgements 
 Paper written under the able guidance of :

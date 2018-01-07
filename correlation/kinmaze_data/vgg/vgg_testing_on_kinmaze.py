@@ -208,17 +208,14 @@ for file in listing3:
 
     def non_max_suppression_slow(boxes, overlapThresh):
     # if there are no boxes, return an empty list
-<<<<<<< HEAD:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         if len(boxes) == 0:
             return []
     # initialize the list of picked indexes
         pick = []
-=======
     	if len(boxes) == 0:
         	return []
     # initialize the list of picked indexes
     	pick = []
->>>>>>> d1bd16cc6f92afa333058ae2eb9c43427182f820:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
 
         # grab the coordinates of the bounding boxes
     	x1 = boxes[:,0]
@@ -259,11 +256,8 @@ for file in listing3:
 
             idxs = np.delete(idxs, suppress)
 
-<<<<<<< HEAD:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         print(boxes[pick])
-=======
     	print boxes[pick]
->>>>>>> d1bd16cc6f92afa333058ae2eb9c43427182f820:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         return boxes[pick]
 
     def load_model(window_image):
@@ -273,11 +267,8 @@ for file in listing3:
         intermediate_layer_model = Model(inputs=model.input,outputs=model.get_layer(layer_name).output)
         intermediate_output = intermediate_layer_model.predict(des)
         y_proba = clf.predict_proba(intermediate_output) ##
-<<<<<<< HEAD:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         class_lab=clf.predict(intermediate_output)
-=======
     	class_lab=clf.predict(intermediate_output)
->>>>>>> d1bd16cc6f92afa333058ae2eb9c43427182f820:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         return y_proba
 
     global count_flowers
@@ -288,11 +279,8 @@ for file in listing3:
         global image_flowers
         global image_leaves
         global clone1
-<<<<<<< HEAD:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         global file
-=======
     	global file
->>>>>>> d1bd16cc6f92afa333058ae2eb9c43427182f820:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
         print ('Starting the image! ' + file + ' ' + str(datetime.datetime.now()))
         clone1=resized
         rowData = []
@@ -323,12 +311,9 @@ for file in listing3:
             global coord
 
             if (prediction[0][1]> prediction[0][0]): #Applying threshold
-<<<<<<< HEAD:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
                 if (prediction[0][1] >= 0.9):
                   coord.append((x,y,x+140,y+140))
-=======
                 coord.append((x,y,x+140,y+140))
->>>>>>> d1bd16cc6f92afa333058ae2eb9c43427182f820:correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py
                 rowData.append(prediction[0][1])
         return rowData
     
