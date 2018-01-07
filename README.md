@@ -17,16 +17,16 @@ To obtain training accuracy :
 
 ```bash
 
-python sift_training_accuracy.py
+python training_accuracy/sift/sift_training_accuracy.py
 
-python vgg_training_accuracy.py
+python training_accuracy/vgg/vgg_training_accuracy.py
 
 ```
 
 To obtain correlation : 
 
 ```bash
-python vgg_testing_on_kinmaze.py path_to_directory_containing_test_images/ output_probs.xlsx
+python correlation/kinmaze_data/vgg/vgg_testing_on_kinmaze.py path_to_directory_containing_test_images/ output_probs.xlsx
 ```
 
 ## Results
