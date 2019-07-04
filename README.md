@@ -1,7 +1,9 @@
 
 ## Introduction
 
-This is an implementation of a yet to be submitted paper titled 'To Go Deep or Not To: Detection of Flowering Panicles in Paddy Rice'. To plan the perfect time for harvest of rice crops, we detect and quantify the flowering of paddy rice. The dataset of rice crop images used in this work is taken from [1].
+This is an implementation of submiited paper: 
+16.	Desai, S., Balasubramanian, V., Fukatsu, T., Ninomiya, S., Guo, W.(2019). Automatic estimation of heading date of paddy rice using deep learning. Plant Methods. 
+To plan the perfect time for harvest of rice crops, we detect and quantify the flowering of paddy rice. The dataset of rice crop images used in this work is taken from [1].
 
 ## Methodology 
 
