@@ -1,7 +1,7 @@
 
 ## Introduction
 
-This is an implementation of submiited paper: 
+This is an implementation of submitted paper: 
 
 Desai, S., Balasubramanian, V., Fukatsu, T., Ninomiya, S., Guo, W.(2019). Automatic estimation of heading date of paddy rice using deep learning. Plant Methods. 
 
