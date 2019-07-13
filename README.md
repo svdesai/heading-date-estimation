@@ -3,7 +3,7 @@
 
 This is an implementation of submitted paper: 
 
-Desai, S., Balasubramanian, V., Fukatsu, T., Ninomiya, S., Guo, W.(2019). Automatic estimation of heading date of paddy rice using deep learning. Plant Methods. 
+Desai, S. V., Balasubramanian, V. N., Fukatsu, T., Ninomiya, S., & Guo, W. (2019). Automatic estimation of heading date of paddy rice using deep learning. Plant Methods, 15(1), 76. https://doi.org/10.1186/s13007-019-0457-1 
 
 To plan the perfect time for harvest of rice crops, we detect and quantify the flowering of paddy rice. The dataset of rice crop images used in this work is taken from [1].
 
